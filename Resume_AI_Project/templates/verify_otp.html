@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP - AI Resume Screener</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { background: #0f172a; font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; }
+        .card { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 400px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 10px; border: 1px solid #334155; background: #1e293b; color: white; box-sizing: border-box; font-size: 1rem; text-align: center; letter-spacing: 5px; }
+        button { width: 100%; padding: 12px; background: #10b981; border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer; font-size: 1rem; }
+        button:hover { background: #059669; }
+        p { color: #94a3b8; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Enter OTP</h2>
+        <p>OTP has been sent successfully to your mobile number.</p>
+        <form action="/verify_otp" method="POST">
+            <input type="hidden" name="mobile" value="{{ mobile }}">
+            <input type="hidden" name="purpose" value="{{ purpose }}">
+            <input type="text" name="otp" placeholder="XXXX" required maxlength="4">
+            <button type="submit">Verify & Login</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Dashboard - AI Resume Screener</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #0f172a, #021630);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            min-height: 100vh; color: #ffffff; padding: 30px;
+        }
+        @keyframes gradientAnimation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        /* Navbar setup */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px);
+            padding: 15px 30px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 40px;
+        }
+        .logo { font-size: 1.3rem; font-weight: 700; color: #3b82f6; display: flex; align-items: center; gap: 10px; }
+        .logout-btn { color: #f43f5e; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .logout-btn:hover { transform: scale(1.05); text-shadow: 0 0 10px rgba(244, 63, 94, 0.4); }
+
+        .dashboard-grid { display: flex; justify-content: center; align-items: center; min-height: 60vh; }
+        
+        /* Main upload card */
+        .upload-card {
+            background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px;
+            padding: 50px 40px; width: 100%; max-width: 600px; text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); animation: fadeInUp 0.8s ease-out;
+        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { font-size: 2rem; font-weight: 600; margin-bottom: 10px; background: linear-gradient(to right, #3b82f6, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.subtitle { color: #94a3b8; margin-bottom: 35px; font-weight: 300; }
+
+        /* Dropzone area design */
+        .dropzone {
+            border: 2px dashed rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.02);
+            padding: 40px 20px; border-radius: 16px; cursor: pointer; transition: all 0.3s ease;
+            position: relative; margin-bottom: 30px;
+        }
+        .dropzone:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.06); }
+        .dropzone i { font-size: 3.5rem; color: #3b82f6; margin-bottom: 15px; transition: 0.3s; }
+        .dropzone:hover i { transform: translateY(-5px); }
+        .dropzone input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .file-info { margin-top: 10px; color: #94a3b8; font-size: 0.9rem; }
+
+        .btn-submit {
+            width: 100%; padding: 15px; background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none; border-radius: 12px; color: white; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; transition: all 0.4s ease; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 0 20px #3b82f6; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Candidate Workspace</div>
+        <a href="/logout" class="logout-btn"><i class="fa-solid fa-power-off"></i> Logout</a>
+    </nav>
+
+    <div class="dashboard-grid">
+        <div class="upload-card">
+            <h2>Upload Your Resume</h2>
+            <p class="subtitle">Our advanced AI will scan your profile and match it with ideal job descriptions instantly.</p>
+            
+            <form action="/candidate_dashboard" method="POST" enctype="multipart/form-data">
+                <div class="dropzone" id="dropzoneBox">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <h3 style="font-size: 1.2rem; font-weight: 500; margin-bottom: 5px;">Drag & Drop Resume here</h3>
+                    <p style="color: #64748b; font-size: 0.9rem;">or click to browse from device</p>
+                    <input type="file" name="resume" id="fileInput" required onchange="updateFileName()">
+                    <div class="file-info" id="fileNameDisplay">Supported formats: PDF, TXT (Max 200MB)</div>
+                </div>
+                
+                <button type="submit" class="btn-submit"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyze & Screen Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // File selection handle text change animation
+        function updateFileName() {
+            const input = document.getElementById('fileInput');
+            const display = document.getElementById('fileNameDisplay');
+            if(input.files.length > 0) {
+                display.innerHTML = `<span style="color: #10b981; font-weight: 600;"><i class="fa-solid fa-circle-check"></i> Selected: ${input.files[0].name}</span>`;
+                document.getElementById('dropzoneBox').style.borderColor = '#10b981';
+            }
+        }
+    </script>
+</body>
+</html>

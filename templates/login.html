@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AI Resume Screener</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { background: #0f172a; font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; }
+        .card { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 400px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #334155; background: #1e293b; color: white; box-sizing: border-box; font-size: 0.95rem; }
+        button { width: 100%; padding: 12px; background: #3b82f6; border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer; margin-top: 10px; font-size: 1rem; }
+        .btn-otp { background: #6366f1; }
+        .btn-otp:hover { background: #4f46e5; }
+        button:hover { background: #2563eb; }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0; position: relative; }
+        .divider-text { background: #151d30; padding: 0 10px; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); color: #64748b; font-size: 0.85rem; }
+        .links-container { margin-top: 20px; display: flex; justify-content: space-between; font-size: 0.85rem; }
+        .links-container a { color: #94a3b8; text-decoration: none; }
+        .links-container a.forgot-link { color: #f43f5e; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Account Login</h2>
+        <form action="/login" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Sign In</button>
+        </form>
+
+        <div class="divider"><span class="divider-text">OR LOGIN VIA OTP</span></div>
+
+        <form action="/send_otp" method="POST">
+            <input type="text" name="mobile" placeholder="Registered Mobile Number" required pattern="\d{10}">
+            <button type="submit" class="btn-otp">Send OTP Login</button>
+        </form>
+
+        <div class="links-container">
+            <a href="/register">Create Account</a>
+            <a href="#" class="forgot-link" onclick="handleForgotPassword()">Forgot Password?</a>
+        </div>
+    </div>
+
+    <script>
+        function handleForgotPassword() {
+            var num = prompt("Enter your 10-digit registered mobile number to reset password:");
+            if (num && num.trim().length === 10) {
+                var f = document.createElement('form');
+                f.method = 'POST';
+                f.action = '/send_otp';
+                
+                var i1 = document.createElement('input');
+                i1.type = 'hidden'; i1.name = 'mobile'; i1.value = num;
+                
+                var i2 = document.createElement('input');
+                i2.type = 'hidden'; i2.name = 'purpose'; i2.value = 'forgot';
+                
+                f.appendChild(i1); f.appendChild(i2);
+                document.body.appendChild(f);
+                f.submit();
+            } else if (num) {
+                alert("Please enter a valid 10-digit number.");
+            }
+        }
+    </script>
+</body>
+</html>

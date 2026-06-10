@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AI Resume Screener</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { background: #0f172a; font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; }
+        .card { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 400px; text-align: center; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #334155; background: #1e293b; color: white; box-sizing: border-box; font-size: 0.95rem; }
+        button { width: 100%; padding: 12px; background: #3b82f6; border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer; margin-top: 10px; font-size: 1rem; }
+        button:hover { background: #2563eb; }
+        .footer-text { margin-top: 15px; color: #94a3b8; font-size: 0.9rem; }
+        .footer-text a { color: #3b82f6; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Create Account</h2>
+        <form action="/register" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="text" name="mobile" placeholder="Mobile Number (10 Digits)" required pattern="\d{10}">
+            <select name="role" required>
+                <option value="" disabled selected>Select Your Role</option>
+                <option value="candidate">Candidate</option>
+                <option value="hr">HR / Recruiter</option>
+            </select>
+            <button type="submit">Register Now</button>
+        </form>
+        <p class="footer-text">Already have an account? <a href="/login">Login here</a></p>
+    </div>
+</body>
+</html>
